@@ -1,0 +1,21 @@
+@import './../../../../../../sass/loc-variables';
+
+.mainWidgetContainer {
+  text-align: center;
+  margin: 5px;
+  border-radius: 5px;
+  width: 15vw;
+  height: 20vh;
+
+  .chartContainer {
+    display: block;
+    border-radius: 5px;
+  }
+
+  .text-header {
+    width: 100%;
+    text-align: center;
+    font-weight: 700;
+    font-size: medium;
+  }
+}

@@ -1,0 +1,27 @@
+<div class="d-flex wrapper" [ngClass]="(navParentClass)?'toggled':''"id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid text-center" role="main">
+
+      <h1 class="h3 mb-4 error mx-auto text-gray-800" data-text="404">404</h1>
+
+      <p class="lead text-gray-800 mb-5">
+        {{pageTitle}}
+      </p>
+      <p class="text-gray-500 mb-0">
+        It looks like you found a glitch in the matrix...
+      </p>
+      <a class="mb-3" [routerLink]="['/dashboard']" title="Go to the dashboard">
+        <i class="fa fa-angle-double-left fa-fw" aria-hidden="true"></i>
+        Back to Dashboard
+      </a>
+
+    </main>
+
+    <vt-footer></vt-footer>
+
+  </div>
+</div>

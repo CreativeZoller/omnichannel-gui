@@ -1,0 +1,97 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Vendor dependencies, some are declared in angular.json
+*/
+// Google Fonts
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,600|PT+Sans|Roboto:300,400,500&display=swap&subset=latin-ext');
+
+// Animate SASS
+@import 'animate';
+
+/*
+ * Project specific dependencies (for proper Bootstrap overrides should become before BS imports)
+*/
+@import './main';
+
+/*
+ * Vendor dependencies, some are declared in angular.json
+*/
+
+// Bootstrap
+@import 'functions', 'variables', 'mixins', 'root', 'reboot', 'type', 'images', 'grid', 'forms', 'buttons', 'transitions', 'dropdown',
+  'button-group', 'input-group', 'custom-forms', 'nav', 'modal', 'navbar', 'card', 'pagination', 'badge', 'jumbotron', 'alert', 'list-group',
+  'progress', 'close', 'toasts', 'spinners', 'utilities', 'print';
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.field-container {
+  width: 30vw !important;
+  margin-right: 0.5em;
+
+  .field {
+    width: 100% !important;
+  }
+
+  button + button {
+    margin-left: 0.5em;
+  }
+}
+
+.sidebar-overlay-admin {
+  min-width: 50vw !important;
+}
+
+.center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+}
+
+:host {
+  color: var(--secondary);
+  flex: 1 0 auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+
+  .spinner-holder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .mat-icon {
+    float: none;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    z-index: 1;
+    cursor: pointer;
+  }
+
+  .field-container {
+    width: 30%;
+    margin-right: 0.5em;
+
+    .field {
+      width: 100%;
+    }
+
+    button + button {
+      margin-left: 0.5em;
+    }
+  }
+}

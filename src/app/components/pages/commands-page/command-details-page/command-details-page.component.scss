@@ -1,0 +1,50 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../../sass/loc-variables';
+
+/*
+ * Command details page component custom stylings
+*/
+:host {
+  color: var(--secondary);
+}
+
+.commandslist-details-holder {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid rgba($black, 0.1);
+  height: auto;
+
+  .new-command-btn-holder {
+    padding-left: 0;
+  }
+
+  .card.shadow {
+    border-radius: 0.38rem;
+  }
+  .table-holder {
+    min-height: 0;
+
+    table {
+      width: 100%;
+      border-top-right-radius: 0;
+    }
+
+    .mat-header-row {
+      background-color: map_get($vertican-colors, 'gray-4');
+
+      .mat-header-cell {
+        color: var(--black);
+      }
+    }
+  }
+}

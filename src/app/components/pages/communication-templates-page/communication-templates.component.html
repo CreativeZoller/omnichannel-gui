@@ -1,0 +1,85 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+      <p class="mb-4">Your message templates are below.</p>
+
+      <div class="new-commandslist-btn-holder my-4">
+        <button class="btn btn-outline btn-primary" (click)="showDetails(false)">Add new message template</button>
+      </div>
+
+      <div class="card shadow mb-4">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+              <!-- TemplateName -->
+              <ng-container matColumnDef="TemplateName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Template Name</th>
+                <td mat-cell *matCellDef="let template">{{ template.TemplateName }}</td>
+              </ng-container>
+              <!-- TemplateText -->
+              <ng-container matColumnDef="TemplateText">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Template Text</th>
+                <td mat-cell *matCellDef="let template">{{ template.TemplateText }}</td>
+              </ng-container>
+              <!-- Message Template actions -->
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let template" class="action-links">
+                  <button class="btn btn-sm btn-dark" (click)="showDetails(template)">Details</button>
+                  <button class="btn btn-sm btn-danger" (click)="openDeleteDialog(template)">
+                    Delete
+                  </button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay" [ngClass]="{ active: selectedRow == row }"></tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-overlay" id="communications-overlay">
+        <div id="dismiss" class="sidebar-close" (click)="onCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+
+        <ng-template *ngIf="selectedRow; then showExisting; else showNew"> </ng-template>
+        <ng-template #showExisting>
+          <h2 class="my-4 text-gray-800">
+            Communication template:
+            <span class="d-block text-muted">{{ selectedRow.TemplateName }}</span>
+          </h2>
+          <vt-edit-communication-template-form
+            [template]="selectedRow"
+            (templateUpdated)="forceRefresh($event)"
+            [isTemplateFormVisible]="makeListformVisible"
+          ></vt-edit-communication-template-form>
+        </ng-template>
+        <ng-template #showNew>
+          <h2 class="my-4 text-gray-800">
+            Add new:
+            <span class="d-block text-muted">Message template</span>
+          </h2>
+
+          <vt-edit-communication-template-form
+            (templateUpdated)="forceRefresh($event)"
+            [isTemplateFormVisible]="makeListformVisible"
+          ></vt-edit-communication-template-form>
+        </ng-template>
+
+      </div>
+      <div class="dark-overlay"></div>
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

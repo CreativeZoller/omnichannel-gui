@@ -1,0 +1,48 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@admin/*": ["src/app/components/pages/Admin/*"],
+      "@commands/*": ["src/app/components/pages/commands-page/*"],
+      "@commands-search/*": ["src/app/components/pages/commands-search-page/*"],
+      "@details-commands/*": ["src/app/components/pages/commands-page/command-details-page/*"],
+      "@communications/*": ["src/app/components/pages/communications-page/*"],
+      "@requests/*": ["src/app/components/pages/communications-request-page/*"],
+      "@dashboard/*": ["src/app/components/pages/dashboard-page/*"],
+      "@landing/*": ["src/app/components/pages/landing-page/*"],
+      "@pagenotfound/*": ["src/app/components/pages/pagenotfound-page/*"],
+      "@dialog/*": ["src/app/components/shared/confirm-dialog/*"],
+      "@footer/*": ["src/app/components/shared/footer/*"],
+      "@verification/*": ["src/app/components/pages/verification-tools-page/*"],
+      "@navmenu/*": ["src/app/components/shared/navbar/*"],
+      "@sidemenu/*": ["src/app/components/shared/sidebar/*"],
+      "@message/*": ["src/app/components/shared/message-form/*"],
+      "@form-commandlist/*": ["src/app/components/shared/edit-commandlist-form/*"],
+      "@form-command/*": ["src/app/components/shared/edit-command-form/*"],
+      "@pages/*": ["src/app/components/pages/*"],
+      "@shared/*": ["src/app/components/shared/*"],
+      "@models/*": ["src/app/models/*"],
+      "@services/*": ["src/app/services/*"],
+      "@shared-model": ["src/app/components/shared/shared.module.ts"]
+    },
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
+    "strictPropertyInitialization": false,
+    "module": "es2020",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2015",
+    "typeRoots": ["node_modules/@types"],
+    "types": ["jquery", "bootstrap", "node", "jest"],
+    "lib": ["es2018", "dom"]
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

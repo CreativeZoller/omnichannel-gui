@@ -1,0 +1,35 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../../sass/loc-variables';
+
+/*
+ * Admin pages general stylings
+*/
+:host {
+  color: var(--secondary);
+}
+
+.wrapper {
+  display: flex;
+}
+
+.page-content-wrapper {
+  min-width: 100vw;
+  background-color: var(--light);
+}
+
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+}

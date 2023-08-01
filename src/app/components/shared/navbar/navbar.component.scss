@@ -1,0 +1,116 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../sass/loc-variables';
+
+/*
+ * Navigational bar shared component custom stylings
+*/
+.navbar {
+  height: 4.375rem;
+  font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  .navbar-nav {
+    display: flex;
+    flex-direction: row;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+
+    .nav-link {
+      color: map_get($vertican-colors, 'gray-3');
+      transition: color 0.25s ease;
+
+      &:hover,
+      &:focus {
+        color: map_get($vertican-colors, 'blue-2');
+      }
+    }
+
+    .topbar-divider {
+      width: 0;
+      border-right: 1px solid map_get($vertican-colors, 'gray-4');
+      height: calc(4.375rem - 2rem);
+      margin: auto 1rem;
+    }
+  }
+
+  .dropdown .dropdown-menu {
+    font-size: 0.85rem;
+    border-color: map_get($vertican-colors, 'gray-6');
+    padding-top: 0;
+    padding-bottom: 0;
+
+    &::before {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      right: 9px;
+      top: -8px;
+      border-bottom: 9px solid map_get($vertican-colors, 'gray-6');
+      border-left: 9px solid rgba(0, 0, 0, 0);
+      border-right: 9px solid rgba(0, 0, 0, 0);
+    }
+    
+    &::after {
+      content: '';
+      display: inline-block;
+      position: absolute;
+      right: 9px;
+      top: -7px;
+      border-bottom: 8px solid $white;
+      border-left: 9px solid rgba(0, 0, 0, 0);
+      border-right: 9px solid rgba(0, 0, 0, 0);
+    }
+
+    .dropdown-item {
+      color: map_get($vertican-colors, 'gray-3');
+      transition: color 0.25s ease;
+
+      &.dropdown-mat {
+        padding: 0.55rem 1.5rem;
+
+        .mat-icon {
+          float: none;
+          margin: 0 0.25rem 0 0;
+          font-size: 18px;
+          vertical-align: text-top;
+        }
+      }
+
+      .dropdown-details {
+        display: block;
+        font-size: 90%;
+        margin-left: 31px;
+      }
+
+      &:hover,
+      &:focus,
+      &:active {
+        color: map_get($vertican-colors, 'blue-2');
+      }
+
+      &:active,
+      &:focus {
+        background-color: map_get($vertican-colors, 'gray-4');
+      }
+    }
+
+    .dropdown-divider {
+      border-top: 1px solid map_get($vertican-colors, 'gray-4');
+      margin: .1rem 0;
+    }
+
+    .dropdown-form {
+      padding: .55rem 1.5rem;
+    }
+  }
+}

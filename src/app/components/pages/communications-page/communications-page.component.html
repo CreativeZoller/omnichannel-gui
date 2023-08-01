@@ -1,0 +1,146 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+      <p class="mb-4">
+        Please choose from the list of conversations below to begin communicating with a consumer or to view the communication history.
+      </p>
+
+      <div class="card shadow mb-4">
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+              <!-- Debtor account number -->
+              <ng-container matColumnDef="AccountName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Account Number</th>
+                <td mat-cell *matCellDef="let account">
+                  {{ account.AccountName }}
+                  <mat-icon
+                    *ngIf="!account.IsVerified"
+                    color="warn"
+                    aria-hidden="false"
+                    aria-label="Account detail page"
+                    class="mat-icon material-icons md-8 verifiedIcon"
+                    matTooltip="This consumer has not completed security validation"
+                    >report_problem</mat-icon
+                  >
+                </td>
+              </ng-container>
+
+              <!-- DebtorName -->
+              <ng-container matColumnDef="DebtorName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>DebtorName</th>
+                <td mat-cell *matCellDef="let account">{{ account.DebtorName }}</td>
+              </ng-container>
+
+              <!-- Debtor phone number -->
+              <ng-container matColumnDef="PhoneNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone Number</th>
+                <td mat-cell *matCellDef="let account">{{ account.PhoneNumber }}</td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr
+                mat-row
+                *matRowDef="let row; columns: columnsToDisplay"
+                (click)="onRowClicked(row)"
+                [ngClass]="{ active: selectedRow == row }"
+              ></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-overlay" id="communications-overlay">
+        <div id="dismiss" class="sidebar-close" (click)="onCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+
+        <h2 class="my-4 text-gray-800" id="debtor-messaging-title">
+          Messages with &nbsp;<mat-icon
+            aria-hidden="false"
+            aria-label="Account detail page"
+            class="material-icons md-8 public"
+            (click)="loadAccountDetailPage()"
+            >public</mat-icon
+          >
+          <span class="d-block text-muted" *ngIf="selectedRow">{{ selectedRow.AccountName }}</span>
+        </h2>
+        <div class="d-flex flex-row justify-content-end older" *ngIf="hasArchive">
+          <span (click)="loadOlderMessages()">View Older Messages</span>
+        </div>
+
+        <div class="row">
+          <div class="col-12" *ngIf="accountMessages">
+            <div class="message-history-container mb-4" id="message-container">
+              <div class="message-history-item clearfix" *ngIf="!accountMessages?.length">
+                There is no written communication history with this account yet.
+              </div>
+              <div class="clearfix" *ngFor="let message of accountMessages">
+                <div class="message-history-item" *ngIf="message.ErrorMessage === ''">
+                  <div
+                    class="message-history-message mb-4"
+                    [ngClass]="{
+                      'message-chat': message.Direction !== 'inbound',
+                      'message-debtor': message.Direction === 'inbound',
+                      'message-pending': message.Status !== 'delivered' && message.Status !== 'sent',
+                      'message-machine': message.IsAutomatedMessage === true
+                    }"
+                  >
+                    <mat-icon
+                      *ngIf="message.Status === 'delivered' || message.Status === 'sent'"
+                      class="mat-icon material-icons md-1 delivered-icon"
+                      role="img"
+                      aria-hidden="true"
+                      title="Delivered"
+                      >verified</mat-icon
+                    >
+                    <mat-icon
+                      *ngIf="message.Status === 'pending'"
+                      class="mat-icon material-icons md-1 pending-icon"
+                      role="img"
+                      aria-hidden="true"
+                      title="Pending ..."
+                      >more_horiz</mat-icon
+                    >
+                    <mat-icon
+                      *ngIf="message.Status === 'failed'"
+                      class="mat-icon material-icons md-1 failed-icon"
+                      role="img"
+                      aria-hidden="true"
+                      title="Failed"
+                      >report_problem</mat-icon
+                    >
+                    <br />
+                    {{ message.Content }}
+                    <small>
+                      {{ message.From }}
+                      <time>{{ message.DateSent | date: 'short' }}</time>
+                    </small>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <vt-message-form
+              [accountId]="selectedRow.AccountId"
+              [phoneNumber]="selectedRow.PhoneNumber"
+              [optOut]="selectedRow.IsOptedOut"
+            ></vt-message-form>
+          </div>
+        </div>
+      </div>
+      <div class="dark-overlay"></div>
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

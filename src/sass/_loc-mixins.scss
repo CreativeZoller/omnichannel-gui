@@ -1,0 +1,17 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project mixin declarations
+*/
+
+/// Usage: rgba-color($color-primary, .5)
+/// needed because :root variables are not recognized by sass rgba method
+@function rgba-color($hexcolor, $opacity) {
+  @return rgba($hexcolor, $opacity);
+}

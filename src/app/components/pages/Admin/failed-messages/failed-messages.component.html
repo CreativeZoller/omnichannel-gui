@@ -1,0 +1,65 @@
+<main class="container-fluid" role="main">
+  <h1 class="h3 mb-4 text-gray-800">
+    {{ pageTitle }}
+  </h1>
+
+  <div class="d-flex flex-row justify-content-between mb-4">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width2">
+      <mat-label>From</mat-label>
+      <input matInput [matDatepicker]="frompick" [(ngModel)]="from" />
+      <mat-datepicker-toggle matSuffix [for]="frompick"></mat-datepicker-toggle>
+      <mat-datepicker #frompick></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="example-full-width2">
+      <mat-label>To</mat-label>
+      <input matInput [matDatepicker]="topick" [(ngModel)]="to" />
+      <mat-datepicker-toggle matSuffix [for]="topick"></mat-datepicker-toggle>
+      <mat-datepicker #topick></mat-datepicker>
+    </mat-form-field>
+    <button class="btn btn-primary" (click)="getData()">Filter</button>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive row-unclickable">
+        <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+          <ng-container matColumnDef="Sid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>System Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.Sid }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="Body">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Message</th>
+            <td mat-cell *matCellDef="let row">{{ row.Body }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="DateCreated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+            <td mat-cell *matCellDef="let row">{{ row.DateCreated | date }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="MessageErrorMessage">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Error Message</th>
+            <td mat-cell *matCellDef="let row">{{ row.MessageErrorMessage }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="AccountId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Account</th>
+            <td mat-cell *matCellDef="let row">{{ row.AccountId }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+        <div class="spinner-holder my-3" *ngIf="loading">
+          <mat-spinner class="mat-spinner"></mat-spinner>
+        </div>
+        <mat-paginator [pageSizeOptions]="[10, 20, 100, 1000]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</main>

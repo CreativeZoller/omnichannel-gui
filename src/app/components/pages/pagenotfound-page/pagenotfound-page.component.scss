@@ -1,0 +1,76 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../sass/main';
+
+/*
+ * 404 page component custom stylings
+*/
+:host {
+  color: var(--secondary);
+}
+
+.wrapper {
+  display: flex;
+}
+
+.page-content-wrapper {
+  min-width: 100vw;
+  background-color: var(--light);
+
+  main {
+    flex: 1 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .error {
+    color: map_get($vertican-colors, 'primary');
+    font-size: 7rem;
+    position: relative;
+    line-height: 1;
+    width: 12.5rem;
+
+    // this can be removed if not approved by marketing :)
+    &::after {
+      content: attr(data-text);
+      position: absolute;
+      left: 2px;
+      text-shadow: -1px 0 $red;
+      top: 0;
+      color: map_get($vertican-colors, 'primary');
+      background: $gray-100;
+      overflow: hidden;
+      clip: rect(0,900px,0,0);
+      animation: noise-anim 10s infinite linear alternate-reverse;
+    }
+
+    &::before {
+      content: attr(data-text);
+      position: absolute;
+      left: -2px;
+      text-shadow: 1px 0 $blue;
+      top: 0;
+      color: map_get($vertican-colors, 'primary');
+      background: $gray-100;
+      overflow: hidden;
+      clip: rect(0,900px,0,0);
+      animation: noise-anim-2 12s infinite linear alternate-reverse;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+}

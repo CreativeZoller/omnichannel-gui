@@ -1,0 +1,45 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+
+      <div class="row" *ngIf="loadWidgets">
+        <div class="col-4">
+          <!--<a class="nav-link" [routerLink]="['/generaltesting']" role="button"> General testing component </a>-->
+          <vt-account-count-interval [companyId]="companyId"></vt-account-count-interval>
+        </div>
+        <div class="col-4">
+          <vt-command-statistic [companyId]="companyId"></vt-command-statistic>
+        </div>
+        <div class="col-4">
+          <vt-message-rate [companyId]="companyId"></vt-message-rate>
+        </div>
+      </div>
+      <div class="row" *ngIf="loadWidgets">
+        <div class="col-6">
+          <vt-message-count-last-month [companyId]="companyId"></vt-message-count-last-month>
+        </div>
+        <div class="col-6">
+          <vt-latest-messages [companyId]="companyId"></vt-latest-messages>
+        </div>
+      </div>
+      <div class="row" *ngIf="loadWidgets">
+        <div class="col-6">
+          <vt-h2h-latest [companyId]="companyId"></vt-h2h-latest>
+        </div>
+        <div class="col-6">
+          <vt-failed-messages [companyId]="companyId"></vt-failed-messages>
+        </div>
+      </div>
+      
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

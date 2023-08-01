@@ -1,0 +1,11 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <router-outlet></router-outlet>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

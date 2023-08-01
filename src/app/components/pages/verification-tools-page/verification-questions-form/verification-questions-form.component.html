@@ -1,0 +1,58 @@
+<form [formGroup]="editVerificationQTNForm" (ngSubmit)="verificationQtnSubmit()">
+  <div class="form-group row">
+    <label for="attemptCount" class="col-4 col-form-label">Attempts count:</label>
+    <div class="col-8">
+      <input
+        type="text"
+        matInput
+        class="form-control form-control-sm"
+        placeholder="Ex. 4"
+        [formControlName]="'attemptCount'"
+        (change)="changeDetected($event)"
+      />
+    </div>
+    <div *ngIf="attemptCount.dirty && attemptCount.errors?.required" class="invalid-feedback">
+      Attempt count for the verification is required
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="qtnType" class="col-4 col-form-label">Type of validation answer:</label>
+    <div class="col-8">
+      <div class="custom-control custom-radio" *ngFor="let typeOption of qtnTypeArray; let i = index">
+        <input
+          id="{{ i }}"
+          type="radio"
+          class="custom-control-input"
+          value="{{ typeOption }}"
+          name="qtnType"
+          [checked]="typeOption == selectedQtnType"
+          [formControlName]="'qtnType'"
+          (change)="changeDetected($event)"
+        />
+        <label class="custom-control-label" for="{{ i }}">{{ typeOption }}</label>
+      </div>
+      <div *ngIf="qtnType.dirty && qtnType.errors?.required" class="invalid-feedback">One verification question type is required</div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="qtnMsg" class="col-4 col-form-label">Question to be answered:</label>
+    <div class="col-8">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        placeholder="Type your question to the customer here"
+        [formControlName]="'qtnMsg'"
+        (change)="changeDetected($event)"
+      />
+    </div>
+    <div *ngIf="qtnMsg.dirty && qtnMsg.errors?.required" class="invalid-feedback">The verification question is required</div>
+    <div *ngIf="qtnMsg.dirty && qtnMsg.errors?.minlength" class="invalid-feedback">
+      The verification question must be at least 8 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!isQtnSaveable ? 'disabled' : null">Save verification question</button>
+    </div>
+  </div>
+</form>

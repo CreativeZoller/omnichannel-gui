@@ -1,0 +1,28 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Slider toggle general stylings
+*/
+.mat-slide-toggle {
+  &.mat-checked {
+    .mat-slide-toggle-bar {
+      background-color: rgba(map_get($vertican-colors, 'blue-2'), 0.54) !important;
+    }
+
+    .mat-slide-toggle-thumb {
+      background-color: map_get($vertican-colors, 'blue-2') !important;
+    }
+  }
+}

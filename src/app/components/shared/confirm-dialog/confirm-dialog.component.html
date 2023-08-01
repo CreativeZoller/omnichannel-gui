@@ -1,0 +1,15 @@
+<div class="header">
+  <h1 mat-dialog-title>
+    {{ data.title }}
+  </h1>
+</div>
+<div mat-dialog-content>
+  <p class="dialog-message">
+    {{ data.message }}
+    <span *ngIf="data.timer"> <countdown [config]="{ leftTime: data.timer, format: 'm:ss' }"></countdown> minutes </span>
+  </p>
+</div>
+<div class="mat-dialog-actions" mat-dialog-actions>
+  <button class="btn btn-outline-secondary" (click)="cancel()">{{ data.cancelText }}</button>
+  <button class="btn btn-primary" (click)="confirm()" *ngIf="data.confirmText?.length > 0">{{ data.confirmText }}</button>
+</div>

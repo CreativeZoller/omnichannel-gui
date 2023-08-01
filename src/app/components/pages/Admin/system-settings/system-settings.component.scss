@@ -1,0 +1,100 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../../sass/loc-variables';
+
+/*
+ * System settings custom stylings
+*/
+:host {
+  color: var(--secondary);
+  flex: 1 0 auto;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+
+  .genesys + .cta-holder {
+    padding-top: 1em;
+  }
+
+  .genesys .error-show {
+    display: inline-block !important;
+    padding-top: 1em !important;
+  }
+
+  .mat-icon {
+    float: none;
+    margin-top: 0px;
+    z-index: 1;
+    cursor: pointer;
+
+    &.mat-icon-edit {
+      &:hover,
+      &:focus {
+        color: $black;
+      }
+    }
+    &.mat-icon-delete {
+      &:hover,
+      &:focus {
+        color: $red;
+      }
+    }
+  }
+
+  .mat-cell {
+    .mat-icon {
+      font-size: 20px;
+      margin: 0 auto;
+      display: inline-block;
+    }
+  }
+
+  .mat-column {
+    padding: 0 5px;
+  }
+
+  .mat-column-SettingTypeName,
+  .mat-column-Value,
+  .mat-column-CreatedBy,
+  .mat-column-Created,
+  .mat-column-ModifiedBy,
+  .mat-column-Modified,
+  .mat-column-Actions {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-CreatedBy,
+  .mat-column-Created,
+  .mat-column-ModifiedBy,
+  .mat-column-Modified,
+  .mat-column-Actions {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    text-align: center;
+  }
+
+  .mat-column-SettingTypeName {
+    flex: 0 0 20% !important;
+    width: 20% !important;
+  }
+
+  .mat-column-Value {
+    flex: 0 0 30% !important;
+    width: 30% !important;
+  }
+}

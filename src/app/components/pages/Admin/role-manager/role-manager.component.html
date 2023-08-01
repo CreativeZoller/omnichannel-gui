@@ -1,0 +1,104 @@
+<main class="container-fluid" role="main">
+  <h1 class="h3 mb-4 text-gray-800">
+    {{ pageTitle }}
+  </h1>
+  <mat-icon
+    aria-hidden="false"
+    *ngIf="hasClaim('OmniChannel.Role.CreateRole')"
+    aria-label="Add role"
+    class="mat-icon material-icons mat-icon-delete pointer-icon"
+    (click)="add()"
+    >add</mat-icon
+  >
+  <div class="card shadow mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive row-unclickable">
+        <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+          <!-- Role Id -->
+          <ng-container matColumnDef="RoleId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Role Id</th>
+            <td mat-cell *matCellDef="let row">{{ row.RoleId }}</td>
+          </ng-container>
+
+          <!-- Role Name -->
+          <ng-container matColumnDef="RoleName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Role Name</th>
+            <td mat-cell *matCellDef="let row">{{ row.RoleName }}</td>
+          </ng-container>
+
+          <!-- CompanyId-->
+          <ng-container matColumnDef="CompanyId">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Company Id</th>
+            <td class="logMessage" mat-cell *matCellDef="let row">{{ row.CompanyId }}</td>
+          </ng-container>
+
+          <!-- Created -->
+          <ng-container matColumnDef="Created">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created</th>
+            <td mat-cell *matCellDef="let row">{{ row.Created | date: 'short' }}</td>
+          </ng-container>
+
+          <!-- CreatedBy -->
+          <ng-container matColumnDef="CreatedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Created By</th>
+            <td mat-cell *matCellDef="let row">{{ row.CreatedBy }}</td>
+          </ng-container>
+
+          <!-- Updated -->
+          <ng-container matColumnDef="Updated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated</th>
+            <td mat-cell *matCellDef="let row">{{ row.Updated | date: 'short' }}</td>
+          </ng-container>
+
+          <!-- Updated By -->
+          <ng-container matColumnDef="UpdatedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Updated By</th>
+            <td mat-cell *matCellDef="let row">{{ row.UpdatedBy }}</td>
+          </ng-container>
+          <!-- Actions -->
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element" class="actions pointer-icon">
+              <mat-icon
+                aria-hidden="false"
+                *ngIf="hasClaim('OmniChannel.Role.UpdateRole')"
+                aria-label="Edit this role"
+                class="mat-icon material-icons mat-icon-edit"
+                (click)="edit(element)"
+                >edit</mat-icon
+              >
+              <mat-icon
+                aria-hidden="false"
+                *ngIf="hasClaim('OmniChannel.Role.UpdateRole')"
+                aria-label="Remove this role"
+                class="mat-icon material-icons mat-icon-delete pointer-icon"
+                (click)="delete(element)"
+                >delete</mat-icon
+              >
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 100, 1000]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay" id="roles-overlay">
+    <div class="sidebar-close" (click)="onCloseClicked()">
+      <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+    </div>
+    <h2 class="my-4 text-gray-800">Role Details:</h2>
+    <vt-role-details
+      *ngIf="overlay"
+      [Id]="selectedRow.RoleId"
+      [Name]="selectedRow.RoleName"
+      [IsNew]="isNew"
+      (closeOverlay)="onCloseFromChild($event)"
+    >
+    </vt-role-details>
+  </div>
+  <div class="dark-overlay"></div>
+</main>

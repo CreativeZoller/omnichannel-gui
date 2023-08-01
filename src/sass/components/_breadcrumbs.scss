@@ -1,0 +1,92 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Breadcrumbs general stylings
+*/
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 1em;
+  max-width: 269px;
+  margin-bottom: 0;
+  list-style: none;
+  background-color: none;
+  color: var(--white);
+  font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+  text-shadow: 0 0 1px rgba-color(var(--white), 0.1);
+  font-weight: 300;
+  font-size: 1.1rem;
+}
+
+.breadcrumb-item {
+  display: flex;
+  flex-wrap: wrap;
+
+  + .breadcrumb-item {
+    padding-left: 0.75rem;
+    position: relative;
+
+    .mat-icon {
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-9px);
+      color: var(--white);
+      font-weight: 600;
+      float: none;
+      margin: 0;
+      font-size: 16px;
+      vertical-align: text-top;
+    }
+  }
+  + .breadcrumb-item:hover::before {
+    text-decoration: underline;
+  }
+
+  + .breadcrumb-item:hover::before {
+    text-decoration: none;
+  }
+
+  .breadcrumb-uplink span,
+  .breadcrumb-uplink .mat-icon,
+  span {
+    color: rgba-color($white, 0.7);
+    transition: color 0.25s;
+  }
+
+  .breadcrumb-uplink {
+    &:hover {
+      text-decoration: none;
+
+      span,
+      .mat-icon {
+        color: rgba-color($white, 1);
+      }
+    }
+  }
+
+  &.active {
+    span {
+      color: rgba-color($white, 1);
+    }
+  }
+
+  &:first-of-type {
+    .mat-icon {
+      display: none;
+      visibility: hidden;
+    }
+  }
+}

@@ -1,0 +1,106 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../../sass/loc-variables';
+
+/*
+ * System logs custom stylings
+*/
+:host {
+  color: var(--secondary);
+  flex: 1 0 auto;
+  padding-left: .5rem;
+  padding-right: .5rem;
+
+  .mat-icon {
+    float: none;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    z-index: 1;
+    cursor: pointer;
+
+    &.mat-icon-edit {
+      &:hover,
+      &:focus {
+        color: $black;
+      }
+    }
+    &.mat-icon-delete {
+      &:hover,
+      &:focus {
+        color: $red;
+      }
+    }
+  }
+
+  .mat-cell:not(.actions) {
+    .mat-icon {
+      font-size: 20px;
+      margin: 0 auto;
+      display: inline-block;
+    }
+  }
+
+  .mat-column {
+    padding: 0 5px;
+  }
+
+  .mat-column-AccountSid,
+  .mat-column-TwilioToken,
+  .mat-column-WebHookUrl,
+  .mat-column-PhoneNumber,
+  .mat-column-Default,
+  .mat-column-IsActive,
+  .mat-column-CreatedBy,
+  .mat-column-Created,
+  .mat-column-ModifiedBy,
+  .mat-column-Modified,
+  .mat-column-Actions {
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+  }
+
+  .mat-column-CreatedBy,
+  .mat-column-Created,
+  .mat-column-ModifiedBy,
+  .mat-column-Modified {
+    flex: 0 0 9% !important;
+    width: 9% !important;
+    text-align: center;
+  }
+
+  .mat-column-Default,
+  .mat-column-IsActive,
+  .mat-column-Actions {
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    text-align: center;
+  }
+
+  .field-container {
+    width: 30%;
+    margin-right: 0.5em;
+
+    .field {
+      width: 100%;
+    }
+
+    button + button {
+      margin-left: 0.5em;
+    }
+  }
+}

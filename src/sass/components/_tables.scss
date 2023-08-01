@@ -1,0 +1,168 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Tables general stylings
+*/
+.table-holder,
+.table-responsive {
+  table,
+  mat-table {
+    display: table;
+    width: 100%;
+    border-top-right-radius: 0.35rem;
+    border-top-left-radius: 0.35rem;
+    overflow: hidden;
+
+    tbody tr,
+    mat-row {
+      transition: background 0.25s ease;
+
+      &:hover,
+      &:active,
+      &.active {
+        cursor: pointer;
+        background: map_get($vertican-colors, 'blue-3');
+
+        td {
+          color: $gray-800;
+        }
+      }
+    }
+  }
+
+  &.row-unclickable {
+    tr {
+      cursor: default !important;
+
+      td .btn:hover {
+        cursor: pointer !important;
+      }
+    }
+  }
+}
+
+.mat-header-cell {
+  font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--secondary);
+
+  &:hover,
+  &:focus {
+    color: var(--black);
+  }
+}
+
+.mat-sort-header-sorted {
+  color: var(--black);
+}
+
+.mat-cell {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: .625rem;
+  color: var(--secondary);
+  max-width: 500px;
+  word-break: break-word;
+  padding: 5px 10px !important;
+  min-height: 48px;
+
+  &.action-links {
+    padding-top: 0 !important;
+
+    button,
+    .btn {
+      margin: 5px 5px 0 0;
+    }
+  }
+}
+
+.mat-paginator {
+  border-bottom-right-radius: 0.35rem;
+  border-bottom-left-radius: 0.35rem;
+  overflow: hidden;
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif !important;
+
+  .mat-paginator-container {
+    border-bottom-right-radius: 0.35rem;
+    border-bottom-left-radius: 0.35rem;
+    background-color: rgba($black, 0.03);
+  }
+}
+
+.mat-form-field.mat-focused .mat-form-field-ripple {
+  background-color: map_get($vertican-colors, 'blue-2');
+}
+
+.mat-paginator-range-label {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif !important;
+}
+
+.mat-form-field.mat-focused.mat-primary .mat-select-arrow,
+.mat-primary .mat-option.mat-selected:not(.mat-option-disabled),
+.mat-option.mat-active {
+  color: map_get($vertican-colors, 'blue-2') !important;
+}
+
+.mat-input-element {
+  caret-color: map_get($vertican-colors, 'blue-1') !important;
+}
+
+.mat-form-field.mat-focused .mat-form-field-label {
+  color: map_get($vertican-colors, 'blue-1') !important;
+}
+
+.mat-form-field.mat-form-field-invalid .mat-form-field-label,
+.error-show {
+  color: map_get($vertican-colors, 'lichi') !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: map_get($vertican-colors, 'blue-2') !important;
+}
+
+.mat-datepicker-toggle-active {
+  color: map_get($vertican-colors, 'blue-2') !important;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+  stroke: map_get($vertican-colors, 'blue-2') !important;
+}
+
+.spinner-holder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .mat-header-cell {
+    font-size: 0.875rem;
+  }
+
+  .mat-cell {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .mat-header-cell {
+    font-size: 1rem;
+  }
+
+  .mat-cell {
+    font-size: 0.875rem;
+  }
+}

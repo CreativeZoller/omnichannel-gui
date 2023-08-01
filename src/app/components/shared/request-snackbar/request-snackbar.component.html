@@ -1,0 +1,13 @@
+<div class="holder">
+  <div class="left">
+    A new communication request arrived. Click on the link to the right, to navigate to the page.
+  </div>
+  <div class="right">
+    <a [routerLink]="['/requests']"
+      title="Click here to see the available Communication Requests"
+      class="snackbar-link"
+      (click)="close()">
+      Check
+    </a>
+  </div>  
+</div>

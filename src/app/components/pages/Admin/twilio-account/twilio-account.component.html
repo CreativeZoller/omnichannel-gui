@@ -1,0 +1,166 @@
+<main class="container-fluid" role="main">
+  <h1 class="h3 mb-4 text-gray-800">
+    {{ pageTitle }}
+  </h1>
+
+  <div class="new-commandslist-btn-holder my-4">
+    <button class="btn btn-outline btn-primary" (click)="create()">Create a new account</button>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive row-unclickable">
+        <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+          <!-- Twillio Acc SID -->
+          <ng-container matColumnDef="AccountSid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Account SID</th>
+            <td mat-cell *matCellDef="let row">{{ row.AccountSid }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc token -->
+          <ng-container matColumnDef="TwilioToken">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Twilio Token</th>
+            <td mat-cell *matCellDef="let row">{{ row.TwilioToken }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc URL-->
+          <ng-container matColumnDef="WebHookUrl">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>WebHook</th>
+            <td mat-cell *matCellDef="let row">{{ row.WebHookUrl }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc numbers -->
+          <ng-container matColumnDef="PhoneNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Numbers</th>
+            <td mat-cell *matCellDef="let row">{{ row.PhoneNumber }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc isDefault -->
+          <ng-container matColumnDef="Default">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Default</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="false" aria-label="This account is default" class="mat-icon material-icons md-8" *ngIf="row.Default"
+                >done</mat-icon
+              >
+            </td>
+          </ng-container>
+
+          <!-- Twillio Acc isActive -->
+          <ng-container matColumnDef="IsActive">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Active</th>
+            <td mat-cell *matCellDef="let row">
+              <mat-icon aria-hidden="false" aria-label="This account is active" class="mat-icon material-icons md-8" *ngIf="row.IsActive"
+                >done</mat-icon
+              >
+              <mat-icon aria-hidden="false" aria-label="This account is not active" class="mat-icon material-icons" *ngIf="!row.IsActive"
+                >clear</mat-icon
+              >
+            </td>
+          </ng-container>
+
+          <!-- Twillio Acc created by -->
+          <ng-container matColumnDef="CreatedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Creator</th>
+            <td mat-cell *matCellDef="let row">{{ row.CreatedBy }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc creation date -->
+          <ng-container matColumnDef="Created">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Creation date</th>
+            <td mat-cell *matCellDef="let row">{{ row.Created | date }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc modifier -->
+          <ng-container matColumnDef="ModifiedBy">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Modifier</th>
+            <td mat-cell *matCellDef="let row">{{ row.ModifiedBy }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc modification date -->
+          <ng-container matColumnDef="Modified">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Modification date</th>
+            <td mat-cell *matCellDef="let row">{{ row.Modified | date }}</td>
+          </ng-container>
+
+          <!-- Twillio Acc actions -->
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element" class="actions">
+              <mat-icon
+                aria-hidden="false"
+                aria-label="Edit this setting"
+                class="mat-icon material-icons mat-icon-edit"
+                (click)="edit(element)"
+                >edit</mat-icon
+              >
+              <mat-icon
+                aria-hidden="false"
+                aria-label="Remove this setting"
+                class="mat-icon material-icons mat-icon-delete"
+                (click)="delete(element)"
+                >delete</mat-icon
+              >
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <mat-paginator [pageSizeOptions]="[10, 20, 100, 1000]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+
+  <div [ngClass]="{ active: overlay }" class="sidebar-overlay sidebar-overlay-admin">
+    <div class="sidebar-close" (click)="onCancel()">
+      <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+    </div>
+
+    <form [formGroup]="twilioForm" class="my-4" (ngSubmit)="onSubmit()">
+      <div class="d-flex flex-column justify-content-between form-container">
+        <div class="form-group field-container">
+          <mat-form-field class="field" flex-gt-xs>
+            <input matInput formControlName="accountSid" type="text" placeholder="Account Sid" />
+          </mat-form-field>
+          <div class="error-show">
+            <div *ngIf="canShowError(f.accountSid) && f.accountSid.errors.required">Account Sid is required</div>
+          </div>
+        </div>
+        <div class="form-group field-container">
+          <mat-form-field class="field" flex-gt-xs>
+            <input matInput formControlName="token" type="text" placeholder="Twilio Token" />
+          </mat-form-field>
+          <div class="error-show">
+            <div *ngIf="canShowError(f.token) && f.token.errors.required">Twilio token is required</div>
+          </div>
+        </div>
+        <div class="form-group field-container">
+          <mat-form-field class="field" flex-gt-xs>
+            <input matInput formControlName="phoneNumber" type="text" placeholder="PhoneNumber" />
+          </mat-form-field>
+          <div class="error-show">
+            <div *ngIf="canShowError(f.phoneNumber) && f.phoneNumber.errors.required">PhoneNumber is required</div>
+          </div>
+        </div>
+        <div class="form-group field-container">
+          <mat-form-field class="field" flex-gt-xs>
+            <input matInput formControlName="url" type="text" placeholder="WebHook Url" />
+          </mat-form-field>
+          <div class="error-show">
+            <div *ngIf="canShowError(f.url) && f.url.errors.required">WebHookUrl is required</div>
+          </div>
+        </div>
+        <div class="form-group field-container d-flex flex-row justify-content-between">
+          <mat-slide-toggle [formControl]="default">Default</mat-slide-toggle>
+          <mat-slide-toggle [formControl]="active">IsActive</mat-slide-toggle>
+        </div>
+        <div class="form-group field-container justify-content-between">
+          <button class="btn btn-primary">Save</button>
+          <button class="btn btn-outline-secondary" (click)="onCancel()">Cancel</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div [ngClass]="{ active: overlay }" class="dark-overlay"></div>
+</main>

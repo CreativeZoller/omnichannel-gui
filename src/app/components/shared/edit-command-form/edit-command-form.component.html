@@ -1,0 +1,96 @@
+<form [formGroup]="editCommandForm" (ngSubmit)="formSubmit()">
+  <div class="form-group row">
+    <label for="editCommandName" class="col-12 col-form-label">Command Name</label>
+    <div class="col-12">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="editCommandName"
+        value=""
+        placeholder="Type your command name here"
+        [formControlName]="'editCommandName'"
+        [ngClass]="{ 'is-invalid': submitted && name.invalid && name.errors }"
+        (change)="changeDetected($event)"
+      />
+    </div>
+    <div *ngIf="name.dirty && name.errors?.required" class="invalid-feedback">
+      The name for the command is required
+    </div>
+    <div *ngIf="name.dirty && name.errors?.minlength" class="invalid-feedback">
+      The name must be at least 3 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="editCommandDescription" class="col-12 col-form-label">Command description</label>
+    <div class="col-12">
+      <textarea
+        class="form-control form-control-sm"
+        rows="3"
+        id="editCommandDescription"
+        value=""
+        placeholder="Type your command description here"
+        [formControlName]="'editCommandDescription'"
+        [ngClass]="{ 'is-invalid': submitted && description.invalid && description.errors }"
+        (change)="changeDetected($event)"
+      ></textarea>
+    </div>
+    <div *ngIf="description.dirty && description.errors?.required" class="invalid-feedback">
+      The description for the command is required
+    </div>
+    <div *ngIf="description.dirty && description.errors?.minlength" class="invalid-feedback">
+      The description must be at least 10 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="editCommandMessage" class="col-12 col-form-label">Message to the customer</label>
+    <div class="col-12">
+      <textarea
+        class="form-control form-control-sm"
+        rows="3"
+        id="editCommandMessage"
+        value=""
+        placeholder="Type your command's message here"
+        [formControlName]="'editCommandMessage'"
+        [ngClass]="{ 'is-invalid': submitted && message.invalid && message.errors }"
+        (change)="changeDetected($event)"
+        [mention]="customerMessageItems"
+        [mentionConfig]="{ disableSort: true }"
+      >
+      </textarea>
+    </div>
+    <div *ngIf="message.dirty && message.errors?.required" class="invalid-feedback">
+      The customer message for the command is required
+    </div>
+    <div *ngIf="message.dirty && message.errors?.minlength" class="invalid-feedback">
+      The customer message must be at least 10 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="editCommandCode" class="col-12 col-form-label">Command the customer send</label>
+    <div class="col-12">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        id="editCommandCode"
+        value=""
+        placeholder="Type your command's code here"
+        [formControlName]="'editCommandCode'"
+        [ngClass]="{ 'is-invalid': submitted && code.invalid && code.errors }"
+        (change)="changeDetected($event)"
+      />
+    </div>
+    <div *ngIf="code.dirty && code.errors?.required" class="invalid-feedback">
+      The command is required
+    </div>
+    <div *ngIf="code.dirty && code.errors?.minlength" class="invalid-feedback">
+      The command must be at least 3 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!isSaveable ? 'disabled' : null">
+        Save the command changes
+      </button>
+    </div>
+  </div>
+</form>

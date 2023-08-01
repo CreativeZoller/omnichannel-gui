@@ -1,0 +1,131 @@
+<form [formGroup]="roleForm" (ngSubmit)="onSubmit()" class="mb-4">
+  <div class="d-flex flex-row wrapper">
+    <div mat-dialog-content class="modal-input modal-field">
+      <div class="form-group">
+        <mat-form-field class="md-block modal-field" flex-gt-xs>
+          <mat-label>Role name</mat-label>
+          <input matInput formControlName="name" type="text" (focusout)="updateName()" />
+        </mat-form-field>
+        <div class="error-show">
+          <div *ngIf="canShowError(f.name) && f.name.errors.required">Name is required</div>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions class="modal-input modal-field">
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        cdkFocusInitial
+        *ngIf="roleSaved && hasClaim('OmniChannel.Role.CreateRole')"
+        class="btn btn-primary mat-basic-primary"
+      >
+        <span> Save </span>
+      </button>
+    </div>
+  </div>
+  <hr class="separator" />
+  <div class="wrapper perm-bound" *ngIf="showSetup">
+    <div cdkDropListGroup>
+      <div class="cdradr-container">
+        <h2>Permissions assigned</h2>
+        <br />
+        <mat-form-field class="md-block modal-field" flex-gt-xs>
+          <input matInput placeholder="Assigned permission" aria-label="Assigned permission" [formControl]="permissionWithObCtrl" />
+        </mat-form-field>
+        <div
+          id="permassigned"
+          cdkDropList
+          transition
+          [cdkDropListData]="permAssigned"
+          class="cdradr-list cdk-drag-animatin"
+          (cdkDropListDropped)="dropPerm($event)"
+        >
+          <div class="cdradr-box" *ngFor="let item of permAssigned" cdkDragBoundary=".perm-bound" cdkDrag [cdkDragDisabled]="dragDisabled">
+            {{ item }}
+          </div>
+        </div>
+      </div>
+      <div class="cdradr-container" *ngIf="hasClaim('OmniChannel.Role.EditPermissions')">
+        <h2>Permissions not assigned</h2>
+        <br />
+        <mat-form-field class="md-block modal-field" flex-gt-xs>
+          <input
+            matInput
+            placeholder="Not Assigned permission"
+            aria-label="Not Assigned permission"
+            [formControl]="permissionWithOutObCtrl"
+          />
+        </mat-form-field>
+        <div
+          id="permnotassigned"
+          cdkDropList
+          transition
+          [cdkDropListData]="permNotAssigned"
+          class="cdradr-list cdk-drag-animating"
+          (cdkDropListDropped)="dropPerm($event)"
+        >
+          <div
+            class="cdradr-box"
+            *ngFor="let item of permNotAssigned"
+            cdkDragBoundary=".perm-bound"
+            cdkDrag
+            [cdkDragDisabled]="dragDisabled"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br /><br />
+  <div class="wrapper user-bound" *ngIf="showSetup">
+    <hr />
+    <div cdkDropListGroup>
+      <div class="cdradr-container">
+        <h2>Users assigned</h2>
+        <br />
+        <mat-form-field class="md-block modal-field" flex-gt-xs>
+          <input matInput placeholder="Assigned user" aria-label="Assigned user" [formControl]="userWithObCtrl" />
+        </mat-form-field>
+        <div
+          id="userassigned"
+          cdkDropList
+          transition
+          [cdkDropListData]="userAssigned"
+          class="cdradr-list cdk-drag-animatin"
+          (cdkDropListDropped)="dropUser($event)"
+        >
+          <div class="cdradr-box" *ngFor="let item of userAssigned" cdkDragBoundary=".user-bound" cdkDrag [cdkDragDisabled]="dragDisabled">
+            {{ item }}
+          </div>
+        </div>
+      </div>
+      <div class="cdradr-container" *ngIf="hasClaim('OmniChannel.Role.EditUsers')">
+        <h2>Users not assigned</h2>
+        <br />
+        <mat-form-field class="md-block modal-field" flex-gt-xs>
+          <input matInput placeholder="Not Assigned user" aria-label="Not Assigned user" [formControl]="userWithOutObCtrl" />
+        </mat-form-field>
+        <div
+          id="usernotassigned"
+          cdkDropList
+          transition
+          [cdkDropListData]="userNotAssigned"
+          class="cdradr-list cdk-drag-animating"
+          (cdkDropListDropped)="dropUser($event)"
+        >
+          <div
+            class="cdradr-box"
+            *ngFor="let item of userNotAssigned"
+            cdkDragBoundary=".user-bound"
+            cdkDrag
+            [cdkDragDisabled]="dragDisabled"
+          >
+            {{ item }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

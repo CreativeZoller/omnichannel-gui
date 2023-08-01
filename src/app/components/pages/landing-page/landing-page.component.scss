@@ -1,0 +1,27 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+
+
+/*
+ * Landing-page component custom stylings
+*/
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.landing-logo {
+  width: 360;
+  max-width: 100%;
+  height: auto;
+}

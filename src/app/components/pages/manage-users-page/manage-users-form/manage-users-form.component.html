@@ -1,0 +1,38 @@
+<div class="alert alert-warning" role="alert" *ngIf="action === 'unlock'">
+  This person failed to successfully answer the security questions.
+  By proceeding, this person will be able to restart the security verification process.
+  Are you sure you want to continue?
+</div>
+<div class="alert alert-warning" role="alert" *ngIf="action === 'optout'">
+  Our records indicate that this person has opted out of messages. 
+  By proceeding, this person may start receiving messages.
+</div>
+
+<form [formGroup]="userManagamentForm" (ngSubmit)="formSubmit()">
+  <div class="form-group row">
+    <label for="manageComment" class="col-12 col-form-label">Please provide a comment for this action</label>
+    <div class="col-12">
+      <textarea
+        class="form-control form-control-sm"
+        rows="3"
+        id="manageComment"
+        value=""
+        placeholder="Type your commands list description here"
+        [formControlName]="'manageComment'"
+        [ngClass]="{ 'is-invalid': submitted && manageComment.invalid && manageComment.errors }"
+        (change)="changeDetected($event)"
+      ></textarea>
+    </div>
+    <div *ngIf="manageComment.dirty && manageComment.errors?.required" class="invalid-feedback">
+      The comment for this action is required
+    </div>
+    <div *ngIf="manageComment.dirty && manageComment.errors?.minlength" class="invalid-feedback">
+      The comment for this action must be 10 characters long at least
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!isSaveable ? 'disabled' : null">Proceed</button>
+    </div>
+  </div>
+</form>

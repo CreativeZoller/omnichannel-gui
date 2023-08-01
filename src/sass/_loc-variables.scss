@@ -1,0 +1,95 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project variable declarations / Bootstrap overwrites (can be done in components also)
+*/
+:root {
+  --blue: #224abe;
+  --indigo: #6610f2;
+  --purple: #6f42c1;
+  --pink: #e83e8c;
+  --red: #e74a3b;
+  --orange: #fd7e14;
+  --yellow: #f6c23e;
+  --green: #1cc88a;
+  --teal: #20c9a6;
+  --cyan: #36b9cc;
+  --white: #fff;
+  --gray: #858796;
+  --gray-dark: #5a5c69;
+  --primary: #4e73df;
+  --secondary: #67737d;
+  --success: #1cc88a;
+  --info: #36b9cc;
+  --warning: #f6c23e;
+  --danger: #e74a3b;
+  --light: #f8f9fc;
+  --dark: #5a5c69;
+  --black: #000000;
+  --white: #ffffff;
+  --breakpoint-xs: 0;
+  --breakpoint-sm: 576px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 992px;
+  --breakpoint-xl: 1200px;
+}
+
+/*
+ * :root variable usage is not always allowed, feel free to
+ * declare global variables for secondary usage here
+*/
+$white: #fff;
+$gray-100: #f8f9fa;
+$gray-200: #e9ecef;
+$gray-300: #dee2e6;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #67737d;
+$gray-700: #495057;
+$gray-800: #343a40;
+$gray-900: #212529;
+$black: #000;
+
+$blue: #4e73df;
+$indigo: #6610f2;
+$purple: #6f42c1;
+$pink: #e83e8c;
+$red: #dc3545;
+$orange: #fd7e14;
+$yellow: #ffc107;
+$green: #28a745;
+$teal: #20c997;
+$cyan: #17a2b8;
+
+/*
+ * custom Vertican theme declaring
+ * usage example: $button-bg: map_get($vertican-colors, 'primary');
+*/
+$vertican-colors: (
+  'gray-1': #333333,
+  'gray-2': #46494a,
+  'gray-3': #747474,
+  'gray-4': #e0dede,
+  'gray-5': #e2e2e2,
+  'gray-6': #eae9e9,
+  'gray-7': #c0c0c0,
+  'blue-1': #105378,
+  'blue-2': #1975b6,
+  'blue-3': #5aabd6,
+  'blue-4': #90c9e8,
+  'orange': #ffba00,
+  'citrus': #ffd700,
+  'lichi': #ec6464,
+);
+
+:root {
+  --danger: map_get($vertican-colors, 'lichi');
+  --orange: map_get($vertican-colors, 'orange');
+  --yellow: map_get($vertican-colors, 'citrus');
+}

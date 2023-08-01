@@ -1,0 +1,85 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../sass/loc-variables';
+
+/*
+ * Communications page component custom stylings
+*/
+:host {
+  color: var(--secondary);
+}
+
+.wrapper {
+  display: flex;
+}
+
+.page-content-wrapper {
+  min-width: 100vw;
+  background-color: var(--light);
+
+  main {
+    flex: 1 0 auto;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+.older {
+  color: var(--blue);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.older:visited {
+  color: var(--purple);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.mat-icon {
+  float: right;
+  margin-top: -20px;
+  z-index: 999;
+
+  &.delivered-icon {
+    color: $green !important;
+  }
+
+  &.pending-icon {
+    color: $yellow !important;
+  }
+
+  &.failed-icon {
+    color: $red !important;
+  }
+}
+
+.public {
+  z-index: 999;
+  cursor: pointer;
+  float: none !important;
+}
+
+.verifiedIcon {
+  z-index: 999;
+  vertical-align: middle !important;
+  padding: 0;
+  margin: 0;
+  float: none !important;
+}
+
+@media (min-width: 768px) {
+  .page-content-wrapper {
+    min-width: 0;
+    width: 100%;
+  }
+}

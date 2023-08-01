@@ -1,0 +1,27 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+
+
+/*
+ * Footer shared component custom stylings
+*/
+.footer.sticky-footer {
+  width: 100%;
+  padding: 2rem 0;
+  flex-shrink: 0;
+  background-color: var(--white);
+  font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+
+  .container {
+    margin-left: 0;
+  }
+}

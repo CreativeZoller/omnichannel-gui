@@ -1,0 +1,71 @@
+<div class="row" class="commandslist-details-holder">
+  <h2 class="overlay-subtitle">Command list commands</h2>
+
+  <div class="col-12 new-command-btn-holder my-4">
+    <button class="btn btn-outline btn-primary" (click)="showCommandEdit(false)">Add new command</button>
+  </div>
+
+  <div class="card shadow mb-4" *ngIf="commandsListDetails?.length > 0">
+    <div class="card-body p-0">
+      <div class="table-holder row-unclickable">
+        <table mat-table #table [dataSource]="dataSource" class="vertican-material-table">
+          <!-- Command item Name -->
+          <ng-container matColumnDef="CommandName">
+            <th mat-header-cell *matHeaderCellDef>Name</th>
+            <td mat-cell *matCellDef="let command">{{ command.CommandName }}</td>
+          </ng-container>
+
+          <!-- Command which actually is used  -->
+          <ng-container matColumnDef="ConsumerCommand">
+            <th mat-header-cell *matHeaderCellDef>Command</th>
+            <td mat-cell *matCellDef="let command">{{ command.ConsumerCommand }}</td>
+          </ng-container>
+
+          <!-- Actions -->
+          <ng-container matColumnDef="Actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element" class="action-links">
+              <button class="btn btn-sm btn-dark" (click)="showCommandEdit(element)">Details</button>
+              <button class="btn btn-sm btn-danger" (click)="showDeleteDialog(element)">Delete</button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="detailColumnsToDisplay; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: detailColumnsToDisplay" [ngClass]="{ active: selectedCommand == row }"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="sidebar-overlay secondary-sidebar-overlay" id="command-overlay">
+    <div id="dismiss" class="sidebar-close secondary-sidebar-close" (click)="onCloseClicked()">
+      <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+    </div>
+
+    <ng-template *ngIf="selectedCommand; then showExisting; else showNew"> </ng-template>
+    <ng-template #showExisting>
+      <h3 class="my-4 text-gray-800">
+        Command details:
+        <span class="d-block text-muted">{{ selectedCommand.CommandName }}</span>
+      </h3>
+      <vt-edit-command-form
+        [command]="selectedCommand"
+        [commandListId]="commandListId"
+        [isCommandformVisible]="makeCommandformVisible"
+        (commandAdded)="forceRefresh($event)"
+      ></vt-edit-command-form>
+    </ng-template>
+    <ng-template #showNew>
+      <h3 class="my-4 text-gray-800">
+        Add new:
+        <span class="d-block text-muted">Command</span>
+      </h3>
+      <vt-edit-command-form
+        [commandListId]="commandListId"
+        [isCommandformVisible]="makeCommandformVisible"
+        (commandAdded)="forceRefresh($event)"
+      ></vt-edit-command-form>
+    </ng-template>
+  </div>
+  <div class="secondary-overlay"></div>
+</div>

@@ -1,0 +1,36 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Dialogs general stylings
+*/
+.mat-dialog-container {
+  width: 620px !important;
+  color: map_get($vertican-colors, 'gray-3');
+
+  .mat-dialog-title {
+    font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+    color: $gray-800;
+  }
+
+  .mat-dialog-actions {
+    justify-content: flex-end;
+    margin-bottom: -16px;
+  }
+
+  button + button,
+  .btn + .btn {
+    margin-left: 0.5rem;
+  }
+}

@@ -1,0 +1,47 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Datepicker general stylings
+*/
+
+.mat-input-element {
+  width: 85% !important;
+  max-width: 85% !important;
+}
+
+.mat-form-field.mat-focused {
+  .mat-form-field-label {
+    color: map_get($vertican-colors, 'blue-2') !important;
+  }
+}
+
+.mat-datepicker-toggle-active {
+  color: map_get($vertican-colors, 'blue-2') !important;
+}
+
+.mat-calendar-body-selected {
+  background-color: map_get($vertican-colors, 'blue-3') !important;
+  color: map_get($vertican-colors, 'gray-6');
+}
+
+mat-datepicker-toggle {
+  color: map_get($vertican-colors, 'blue-2');
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: map_get($vertican-colors, 'blue-1');
+  }
+}

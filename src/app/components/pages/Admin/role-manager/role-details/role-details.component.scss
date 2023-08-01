@@ -1,0 +1,114 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../../../sass/loc-variables';
+
+/*
+ * System settings custom stylings
+*/
+.mb-4 {
+  margin-bottom: 40px;
+}
+
+.modal-input {
+  overflow: hidden !important;
+}
+
+.modal-field {
+  width: 20vw;
+  align-content: center;
+  align-items: center;
+}
+
+.error-show {
+  display: inline !important;
+  width: 100%;
+  margin-top: 0.25rem;
+  font-size: 80%;
+  color: $red;
+}
+
+.cdradr-container {
+  width: 27vw;
+  max-width: 100%;
+  margin: 0 25px 25px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.cdradr-list {
+  border: solid 1px $gray-400;
+  height: 22vh;
+  overflow: auto !important;
+  background: $white;
+  border-radius: 4px;
+  display: block;
+}
+
+.cdradr-box {
+  padding: 20px 10px;
+  border-bottom: solid 1px #ccc;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: move;
+  background: $white;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.cdradr-box:last-child {
+  border: none;
+}
+
+.cdradr-list.cdk-drop-list-dragging .cdradr-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.delete-button {
+  display: inline-block;
+  float: right;
+  margin-right: 3vw;
+  margin-top: 20px;
+}
+
+.separator {
+  background-color: $white !important;
+  height: 1px;
+  border: none;
+}
+
+@media (max-width: 1200px) {
+  .cdradr-container {
+    width: 22vw;
+    max-width: 100%;
+    margin: 0 25px 25px 0;
+    display: inline-block;
+    vertical-align: top;
+  }
+}

@@ -1,0 +1,38 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Main styling imports - to be able to use things declared in ./sass
+*/
+@import './../../../../sass/loc-variables';
+
+/*
+ * Release Notes SnackBar shared component custom stylings
+*/
+.holder {
+  font-size: 14px;
+
+  .left {
+    float: left;
+    width: 80%;
+  }
+  .right {
+    float: right;
+    width: 20%;
+    text-align: right;
+  }
+
+  &::after {
+    clear: both;
+  }
+
+  .snackbar-link {
+    text-decoration: none;
+    color: $yellow;
+  }
+}

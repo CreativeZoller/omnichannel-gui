@@ -1,0 +1,180 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+      <p class="mb-4">You can search inside the Command Lists for the value of "Command the customer send".</p>
+
+      <form [formGroup]="searchForm" (ngSubmit)="formSubmit()">
+        <div class="form-group row">
+          <label for="searchCommandName" class="col-12 col-form-label">Command</label>
+          <div class="col-12">
+            <input
+              type="text"
+              class="form-control form-control-sm"
+              id="searchCommandName"
+              value=""
+              placeholder="Type your command name here"
+              [formControlName]="'searchCommandName'"
+              [ngClass]="{ 'is-invalid': submitted && name.invalid && name.errors }"
+              (change)="changeDetected($event)"
+            />
+          </div>
+          <div *ngIf="name.dirty && name.errors?.required" class="invalid-feedback">The name for the command is required</div>
+          <div *ngIf="name.dirty && name.errors?.minlength" class="invalid-feedback">The name must be at least 3 characters long</div>
+        </div>
+        <div class="form-group row">
+          <div class="col-12">
+            <button class="btn btn-primary" type="submit">Search for command</button>
+          </div>
+        </div>
+      </form>
+
+      <div class="card shadow mb-4" *ngIf="searchedCommandListData?.length > 0">
+        <div class="card-body p-0">
+          <div class="table-responsive row-unclickable">
+            <table mat-table #table [dataSource]="dataSource" class="vertican-material-table">
+              <!-- Command item Name -->
+              <ng-container matColumnDef="CommandName">
+                <th mat-header-cell *matHeaderCellDef>Command Name</th>
+                <td mat-cell *matCellDef="let command">{{ command.CommandName }}</td>
+              </ng-container>
+
+              <!-- Command List Name -->
+              <ng-container matColumnDef="CommandListName">
+                <th mat-header-cell *matHeaderCellDef>Command List Name</th>
+                <td mat-cell *matCellDef="let command">{{ command.CommandListName }}</td>
+              </ng-container>
+
+              <!-- Command which actually is used  -->
+              <ng-container matColumnDef="ConsumerCommand">
+                <th mat-header-cell *matHeaderCellDef>Command</th>
+                <td mat-cell *matCellDef="let command">{{ command.ConsumerCommand }}</td>
+              </ng-container>
+
+              <!-- Actions -->
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element" class="action-links">
+                  <button class="btn btn-sm btn-dark" (click)="showCommandEdit(element)">Details</button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay" [ngClass]="{ active: selectedRow == row }"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-overlay" id="command-overlay">
+        <div class="sidebar-close" (click)="onCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+        <h3 class="my-4 text-gray-800">
+          Command details:
+          <span class="d-block text-muted">{{ selectedRow?.CommandName }}</span>
+        </h3>
+        <form [formGroup]="editCommandForm" (ngSubmit)="submitChanges()">
+          <div class="form-group row">
+            <label for="editCommandName" class="col-12 col-form-label">Command Name</label>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="editCommandName"
+                value=""
+                placeholder="Type your command name here"
+                [formControlName]="'editCommandName'"
+                [ngClass]="{ 'is-invalid': submitted && codeName.invalid && codeName.errors }"
+                (change)="codeChangeDetected($event)"
+              />
+            </div>
+            <div *ngIf="codeName.dirty && codeName.errors?.required" class="invalid-feedback">The name for the command is required</div>
+            <div *ngIf="codeName.dirty && codeName.errors?.minlength" class="invalid-feedback">
+              The name must be at least 3 characters long
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="editCommandDescription" class="col-12 col-form-label">Command description</label>
+            <div class="col-12">
+              <textarea
+                class="form-control form-control-sm"
+                rows="3"
+                id="editCommandDescription"
+                value=""
+                placeholder="Type your command description here"
+                [formControlName]="'editCommandDescription'"
+                [ngClass]="{ 'is-invalid': submitted && description.invalid && description.errors }"
+                (change)="codeChangeDetected($event)"
+              ></textarea>
+            </div>
+            <div *ngIf="description.dirty && description.errors?.required" class="invalid-feedback">
+              The description for the command is required
+            </div>
+            <div *ngIf="description.dirty && description.errors?.minlength" class="invalid-feedback">
+              The description must be at least 10 characters long
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="editCommandMessage" class="col-12 col-form-label">Message to the customer</label>
+            <div class="col-12">
+              <textarea
+                class="form-control form-control-sm"
+                rows="3"
+                id="editCommandMessage"
+                value=""
+                placeholder="Type your command's message here"
+                [formControlName]="'editCommandMessage'"
+                [ngClass]="{ 'is-invalid': submitted && message.invalid && message.errors }"
+                (change)="codeChangeDetected($event)"
+                [mention]="customerMessageItems"
+                [mentionConfig]="{ disableSort: true }"
+              >
+                ></textarea
+              >
+            </div>
+            <div *ngIf="message.dirty && message.errors?.required" class="invalid-feedback">
+              The customer message for the command is required
+            </div>
+            <div *ngIf="message.dirty && message.errors?.minlength" class="invalid-feedback">
+              The customer message must be at least 10 characters long
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="editCommandCode" class="col-12 col-form-label">Command the customer send</label>
+            <div class="col-12">
+              <input
+                type="text"
+                class="form-control form-control-sm"
+                id="editCommandCode"
+                value=""
+                placeholder="Type your command's code here"
+                [formControlName]="'editCommandCode'"
+                [ngClass]="{ 'is-invalid': submitted && code.invalid && code.errors }"
+                (change)="codeChangeDetected($event)"
+              />
+            </div>
+            <div *ngIf="code.dirty && code.errors?.required" class="invalid-feedback">The command is required</div>
+            <div *ngIf="code.dirty && code.errors?.minlength" class="invalid-feedback">The command must be at least 3 characters long</div>
+          </div>
+          <div class="form-group row">
+            <div class="col-12">
+              <button class="btn btn-primary" type="submit" [disabled]="!isCodeSaveable ? 'disabled' : null">
+                Save the command changes
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="dark-overlay"></div>
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

@@ -1,0 +1,139 @@
+<header>
+  <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow" role="navigation" aria-label="Top navigation">
+    <button class="btn btn-primary btn-mat" id="menu-toggle" (click)="toggleParentClass()">
+      <span class="sr-only">Toggle the side navigation</span>
+      <mat-icon aria-hidden="false" aria-label="Toggle the side navigation" class="mat-icon material-icons">menu</mat-icon>
+    </button>
+
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <mat-icon aria-hidden="false" class="mat-icon material-icons">settings</mat-icon>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            [routerLink]=""
+            id="settingsDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Settings
+          </a>
+          <ul *ngIf='showMenu' class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="settingsDropdown">
+            <li *ngIf="usr?.VT_Employee">
+              <div class="dropdown-form">
+                <div class="form-group mb-2">
+                  <input type="text" class="form-control form-control-sm" [(ngModel)]="agentId" placeholder="View as Agent ID:" />
+                </div>
+                <div class="form-group mb-0">
+                  <button class="btn btn-sm btn-primary" (click)="changeCompany()">Apply</button>&nbsp;
+                  <button class="btn btn-sm btn-outline-secondary" (click)="resetCompany()" [disabled]="agentId === ''">Reset</button>
+                </div>
+              </div>
+            </li>
+            <li *ngIf="usr?.VT_Employee" class="dropdown-divider"></li>
+            <li *ngIf="roleVisible">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/roles']" title="Role Management">
+                <mat-icon aria-hidden="false" aria-label="Role Management" class="mat-icon material-icons">person_pin</mat-icon>
+                Role Management
+              </a>
+            </li>
+            <li *ngIf="checkRole('OmniChannel.SystemSettings.View')" class="dropdown-divider"></li>
+            <li>
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/settings']" title="Company specific system settings">
+                <mat-icon aria-hidden="false" aria-label="System settings" class="mat-icon material-icons">settings</mat-icon>
+                System Settings
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/twiliaccount']" title="Twilio Account information">
+                <mat-icon aria-hidden="false" aria-label="Twilio Account information" class="mat-icon material-icons"
+                  >account_circle</mat-icon
+                >
+                Twilio Account information
+              </a>
+            </li>
+            <li *ngIf="checkRole('OmniChannel.Commands.View')">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/commands']" title="Reserved commands settings">
+                <mat-icon aria-hidden="false" aria-label="Reserved Commands" class="mat-icon material-icons">try</mat-icon>
+                Reserved Commands
+              </a>
+            </li>
+            <li *ngIf="usr?.VT_Employee">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/log']" title="System log information">
+                <mat-icon aria-hidden="false" aria-label="System logs" class="mat-icon material-icons">notes</mat-icon>
+                System logs
+              </a>
+            </li>
+            <li *ngIf="checkRole('OmniChannel.UnknownMessages.View')">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/unknown']" title="Unknown Messages">
+                <mat-icon aria-hidden="false" aria-label="Unknown Messages" class="mat-icon material-icons">textsms</mat-icon>
+                Unknown Messages
+              </a>
+            </li>
+            <li *ngIf="checkRole('OmniChannel.FailedMessages.View')">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/failed']" title="Failed Messages">
+                <mat-icon aria-hidden="false" aria-label="Failed Messages" class="mat-icon material-icons">chat_bubble_outline</mat-icon>
+                Failed Messages
+              </a>
+            </li>
+            <li *ngIf="checkRole('OmniChannel.InvalidMessages.View')">
+              <a class="dropdown-item dropdown-mat" [routerLink]="['/admin/invalid']" title="Invalid Messages">
+                <mat-icon aria-hidden="false" aria-label="Invalid Messages" class="mat-icon material-icons">sms_failed</mat-icon>
+                Invalid Messages
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item dropdown-mat" (click)="getToken()" title="Copy Token">
+                <mat-icon aria-hidden="false" aria-label="Copy Token" class="mat-icon material-icons">account_box</mat-icon>
+                Copy Token
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="topbar-divider d-none d-sm-block"></li>
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            [routerLink]=""
+            id="accountDropdown"
+            role="button"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Account
+          </a>
+          <ul class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="accountDropdown">
+            <li>
+              <a class="dropdown-item dropdown-mat" disabled title="The current user" *ngIf="userClaim">
+                <mat-icon aria-hidden="false" class="mat-icon material-icons">assignment_ind</mat-icon>
+                {{ userClaim.FullName }}
+                <span class="dropdown-details">Client: {{ userClaim.CompanyName }}</span>
+              </a>
+            </li>
+            <li class="dropdown-divider" *ngIf="userClaim"></li>
+            <li>
+              <a class="dropdown-item dropdown-mat" [routerLink]="" id="logout-button" (click)="openDialog()" title="Log out">
+                <mat-icon aria-hidden="false" aria-label="Logout" class="mat-icon material-icons">exit_to_app</mat-icon>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</header>

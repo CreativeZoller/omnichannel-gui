@@ -1,0 +1,179 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+      <p class="mb-4">You can modify the used verification messages and questions below in this page.</p>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <span class="m-0 font-weight-bold">Verification messages</span>
+            </div>
+            <div class="card-body">
+              <ng-template *ngIf="noMessages; then showNoMsg; else showEditMsg"> </ng-template>
+              <ng-template #showNoMsg>
+                <p class="mb-4">There are no verification messages yet. Please add them first in order to modify them later.</p>
+              </ng-template>
+              <ng-template #showEditMsg>
+                <div class="table-holder row-unclickable">
+                  <table mat-table #table [dataSource]="msgData" class="vertican-material-table">
+                    <!-- Verification Message label -->
+                    <ng-container matColumnDef="Label">
+                      <th mat-header-cell *matHeaderCellDef>Label</th>
+                      <td mat-cell *matCellDef="let msg">{{ msg.Label }}</td>
+                    </ng-container>
+                    <!-- Verification Message message -->
+                    <ng-container matColumnDef="Message">
+                      <th mat-header-cell *matHeaderCellDef>Message</th>
+                      <td mat-cell *matCellDef="let msg">{{ msg.Message }}</td>
+                    </ng-container>
+                    <!-- Actions -->
+                    <ng-container matColumnDef="Actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let msg" class="action-links">
+                        <button class="btn btn-sm btn-dark" (click)="modifyMessage(msg)">Details</button>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="msgColumnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: msgColumnsToDisplay" [ngClass]="{ active: selectedMessage == row }"></tr>
+                  </table>
+                </div>
+              </ng-template>
+
+              <div *ngIf="canImplementMsg" class="mt-4">
+                <button class="btn btn-primary" (click)="modifyMessage(false)">Add new Message</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <span class="m-0 font-weight-bold">Verification questions</span>
+            </div>
+            <div class="card-body">
+              <ng-template *ngIf="noQuestions; then showNoQtn; else showEditQtn"> </ng-template>
+              <ng-template #showNoQtn>
+                <p class="mb-4">There are no verification questions yet. Please add them first in order to modify them later.</p>
+              </ng-template>
+              <ng-template #showEditQtn>
+                <div class="table-holder row-unclickable">
+                  <table mat-table #table [dataSource]="qtnData" class="vertican-material-table">
+                    <!-- Verification Question text -->
+                    <ng-container matColumnDef="QuestionToConsumer">
+                      <th mat-header-cell *matHeaderCellDef>Question to be answered</th>
+                      <td mat-cell *matCellDef="let qtn">{{ qtn.QuestionToConsumer }}</td>
+                    </ng-container>
+                    <!-- Verification Question type -->
+                    <ng-container matColumnDef="AnswerValidationOption">
+                      <th mat-header-cell *matHeaderCellDef>Question type</th>
+                      <td mat-cell *matCellDef="let qtn">{{ qtn.AnswerValidationOption }}</td>
+                    </ng-container>
+                    <!-- Verification Question attempts -->
+                    <ng-container matColumnDef="AttemptCount">
+                      <th mat-header-cell *matHeaderCellDef>Attempts</th>
+                      <td mat-cell *matCellDef="let qtn">{{ qtn.AttemptCount }}</td>
+                    </ng-container>
+                    <!-- Actions -->
+                    <ng-container matColumnDef="Actions">
+                      <th mat-header-cell *matHeaderCellDef>Actions</th>
+                      <td mat-cell *matCellDef="let qtn" class="action-links">
+                        <button class="btn btn-sm btn-dark" (click)="modifyQuestion(qtn)">Details</button>
+                        <button class="btn btn-sm btn-danger" (click)="showDeleteQtnDialog(qtn)" *ngIf="canRemoveQtn">Delete</button>
+                      </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="qtnColumnsToDisplay"></tr>
+                    <tr mat-row *matRowDef="let row; columns: qtnColumnsToDisplay" [ngClass]="{ active: selectedQuestion == row }"></tr>
+                  </table>
+                </div>
+              </ng-template>
+
+              <div *ngIf="canImplementQtn" class="mt-4">
+                <button class="btn btn-primary" (click)="modifyQuestion(false)">Add new questions</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-overlay" id="messages-overlay">
+        <div id="dismiss" class="sidebar-close" (click)="onMsgCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+
+        <ng-template *ngIf="selectedMessage; then showExistingMsg; else showNewMsg"> </ng-template>
+        <ng-template #showExistingMsg>
+          <h3 class="my-4 text-gray-800">
+            Modify verification message:
+            <span class="d-block text-muted">{{ selectedMessage.Label }}</span>
+          </h3>
+          <vt-verification-message-form
+            [verificationMsg]="selectedMessage"
+            [originalMsg]="messagesRawData"
+            [isOverlayVisible]="isMessageVisible"
+            (msgChanged)="forceRefreshMsg($event)"
+          ></vt-verification-message-form>
+        </ng-template>
+        <ng-template #showNewMsg>
+          <h3 class="my-4 text-gray-800">
+            Modify verification message:
+            <span class="d-block text-muted">&nbsp;</span>
+          </h3>
+          <vt-verification-message-form
+            [originalMsg]="messagesRawData"
+            [isOverlayVisible]="isMessageVisible"
+            (msgChanged)="forceRefreshMsg($event)"
+          ></vt-verification-message-form>
+        </ng-template>
+      </div>
+
+      <div class="sidebar-overlay" id="questions-overlay">
+        <div id="dismiss" class="sidebar-close secondary-sidebar-close" (click)="onQtnCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+
+        <ng-template *ngIf="selectedQuestion; then showExistingQtn; else showNewQtn"> </ng-template>
+        <ng-template #showExistingQtn>
+          <h3 class="my-4 text-gray-800">
+            Modify verification question:
+            <span class="d-block text-muted">{{ selectedQuestion.QuestionToConsumer }}</span>
+          </h3>
+          <vt-verification-questions-form
+            [verificationQtn]="selectedQuestion"
+            [originalQtn]="messagesRawData"
+            [isOverlayVisible]="isQuestionVisible"
+            (qtnChanged)="forceRefreshQtn($event)"
+          ></vt-verification-questions-form>
+        </ng-template>
+        <ng-template #showNewQtn>
+          <h3 class="my-4 text-gray-800">
+            Modify verification question:
+            <span class="d-block text-muted">&nbsp;</span>
+          </h3>
+
+          <vt-verification-questions-form
+            [originalQtn]="messagesRawData"
+            [isOverlayVisible]="isQuestionVisible"
+            (qtnChanged)="forceRefreshQtn($event)"
+          ></vt-verification-questions-form>
+        </ng-template>
+      </div>
+      <div class="messages-overlay"></div>
+      <div class="questions-overlay"></div>
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

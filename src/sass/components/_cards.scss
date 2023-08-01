@@ -1,0 +1,51 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Cards general stylings
+*/
+.card {
+  border: 1px solid map_get($vertican-colors, 'gray-6');
+  border-radius: 0.35rem;
+
+  &.border-left {
+    border-left-width: 0.25rem !important;
+    border-left-style: solid !important;
+
+    &.info {
+      border-left-color: map_get($vertican-colors, 'blue-3') !important;
+    }
+  }
+
+  .card-header {
+    border-bottom: 1px solid map_get($vertican-colors, 'gray-4');
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6,
+    span,
+    .h1,
+    .h2,
+    .h3,
+    .h4,
+    .h5,
+    .h6 {
+      font-family: 'PT Sans', 'Helvetica Neue', Arial, sans-serif;
+      color: var(--secondary);
+    }
+  }
+}

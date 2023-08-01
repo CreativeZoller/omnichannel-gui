@@ -1,0 +1,79 @@
+<div class="d-flex wrapper" [ngClass]="navParentClass ? 'toggled' : ''" id="wrapper">
+  <vt-sidebar></vt-sidebar>
+
+  <div id="page-content-wrapper" class="page-content-wrapper d-flex flex-column">
+    <vt-navbar (toggleEvent)="toggleReceive($event)"></vt-navbar>
+
+    <main class="container-fluid" role="main">
+      <h1 class="h3 mb-4 text-gray-800">
+        {{ pageTitle }}
+      </h1>
+      <p class="mb-4">Your manageable users list is below. Only one user can be edited at a time.</p>
+
+      <div class="card shadow mb-4">
+        <div class="card-body p-0">
+          <div class="table-responsive row-unclickable">
+            <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+              <!-- AccountNumber -->
+              <ng-container matColumnDef="AccountNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Account number</th>
+                <td mat-cell *matCellDef="let userList">{{ userList.AccountNumber }}</td>
+                <!-- TODO: show icons of being locked up or opted out - which icons?? -->
+              </ng-container>
+
+              <!-- DebtorName -->
+              <ng-container matColumnDef="DebtorName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Debtor name</th>
+                <td mat-cell *matCellDef="let userList">{{ userList.DebtorName }}</td>
+              </ng-container>
+
+              <!-- PhoneNumber -->
+              <ng-container matColumnDef="PhoneNumber">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>Phone number</th>
+                <td mat-cell *matCellDef="let userList">{{ userList.PhoneNumber }}</td>
+              </ng-container>
+
+              <!-- Actions -->
+              <ng-container matColumnDef="Actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element" class="action-links">
+                  <button class="btn btn-sm btn-secondary" *ngIf="!element.IsLockedOut && !element.IsOptedOut">No actions available</button>
+                  <button class="btn btn-sm btn-light" (click)="unlockUser(element)" *ngIf="element.IsLockedOut && userCanUnlock">Unlock</button>
+                  <button class="btn btn-sm btn-light" (click)="antiOptoutUser(element)" *ngIf="element.IsOptedOut && userCanReset">Reset Opt Out</button>
+                </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+              <tr mat-row *matRowDef="let row; columns: columnsToDisplay" [ngClass]="{ active: selectedRow == row }"></tr>
+            </table>
+
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+      </div>
+
+      <div class="sidebar-overlay" id="users-overlay">
+        <div class="sidebar-close" (click)="onCloseClicked()">
+          <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+        </div>
+
+          <h2 class="my-4 text-gray-800">
+            {{ useCaseText }}:
+            <span class="d-block text-muted">{{ selectedRow?.AccountNumber }} <small>- {{ selectedRow?.DebtorName | titlecase }}</small></span>
+          </h2>
+
+          <vt-manage-users-form
+            [userToManage]="selectedRow"
+            [action]="useCase "
+            (userChanged)="forceRefresh($event)"
+            [isListformVisible]="makeListformVisible"
+          ></vt-manage-users-form>
+
+      </div>
+      <div class="dark-overlay"></div>
+
+    </main>
+
+    <vt-footer></vt-footer>
+  </div>
+</div>

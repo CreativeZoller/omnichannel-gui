@@ -1,0 +1,58 @@
+<nav class="main-sidebar" id="sidebar-wrapper" role="navigation" aria-label="Side navigation">
+  <div class="sidebar-heading d-flex align-items-center justify-content-center">
+    <a [routerLink]="['/dashboard']" title="Go to the dashboard">
+      <div class="sidebar-brand-icon">
+        <img src="./assets/images/Vertican-logo.png" class="sidebar-logo" alt="Vertican Logo" />
+      </div>
+    </a>
+  </div>
+  <hr class="sidebar-divider my-0" />
+  <ul class="list-group list-group-flush">
+    <ng-template #recursiveList let-naviNode>
+      <li *ngFor="let item of naviNode" class="list-group-item" [ngClass]="{ 'nested-list-group': item.children.length > 0 }">
+        <ng-template [ngIf]="!isNested(item.type) && item.visible">
+          <a class="list-group-item-action" routerLinkActive="active" routerLink="{{ item.route }}" title="{{ item.title }}">
+            <mat-icon aria-hidden="false" aria-label="{{ item.label }}" class="mat-icon material-icons">{{ item.icon }}</mat-icon>
+            <span class="list-group-text">{{ item.label }}</span>
+          </a>
+        </ng-template>
+
+        <ng-template [ngIf]="isNested(item.type)">
+          <div class="list-group-item-action" (click)="toggleNest(item.menuid)">
+            <mat-icon aria-hidden="false" aria-label="{{ item.label }}" class="mat-icon material-icons">{{ item.icon }}</mat-icon>
+            <span class="list-group-text">{{ item.label }}</span>
+            <mat-icon aria-hidden="false" class="mat-icon material-icons caret-right">keyboard_arrow_right</mat-icon>
+          </div>
+          <div class="mp-level" id="mp-level-{{ item.menuid }}">
+            <ol class="breadcrumb">
+              <li
+                class="breadcrumb-item"
+                *ngFor="let breadcrumb of item.breadcrumbs; let first = first; let last = last"
+                [ngClass]="{ active: last }"
+              >
+                <ng-template [ngIf]="!last">
+                  <a class="breadcrumb-uplink" title="{{ breadcrumb.title }}" [routerLink]="" (click)="isClickable(breadcrumb.menuid)">
+                    <mat-icon aria-hidden="false" class="mat-icon material-icons caret-right">keyboard_arrow_right</mat-icon>
+                    <span>{{ breadcrumb.label }}</span>
+                  </a>
+                </ng-template>
+                <ng-template [ngIf]="last">
+                  <mat-icon aria-hidden="false" class="mat-icon material-icons">keyboard_arrow_right</mat-icon>
+                  <span>{{ breadcrumb.label }}</span>
+                </ng-template>
+              </li>
+            </ol>
+            <div class="back" (click)="toggleNest(item.menuid)" title="Go back one level">
+              <mat-icon aria-hidden="false" class="mat-icon material-icons">keyboard_arrow_left</mat-icon>
+              back
+            </div>
+            <ul class="list-group list-group-flush">
+              <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: item.children }"></ng-container>
+            </ul>
+          </div>
+        </ng-template>
+      </li>
+    </ng-template>
+    <ng-container *ngTemplateOutlet="recursiveList; context: { $implicit: naviNode }"></ng-container>
+  </ul>
+</nav>

@@ -1,0 +1,35 @@
+<div class="mainWidgetContainer">
+  <div *ngIf="!visible">
+    <p>Loading widget data ...</p>
+  </div>
+  <div *ngIf="visible && errorMessage">
+    <p *ngIf="errorMessage" class="error-show">{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!errorMessage && visible">
+    <div class="text-header">
+      <span> H2H latest </span>
+    </div>
+    <br />
+    <table class="table table-responsive">
+      <thead>
+        <tr class="card-body">
+          <th class="bold-cell">From</th>
+          <th class="bold-cell">Message</th>
+          <th class="bold-cell">To</th>
+          <th class="bold-cell">Status</th>
+          <th class="bold-cell" style="white-space: nowrap">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let message of messages" class="card-body">
+          <td>{{ message?.From }}</td>
+          <td>{{ message?.Content }}</td>
+          <td>{{ message?.To }}</td>
+          <td>{{ message?.Status }}</td>
+          <td style="white-space: nowrap">{{ message?.DateSent | slice: 0:10 }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

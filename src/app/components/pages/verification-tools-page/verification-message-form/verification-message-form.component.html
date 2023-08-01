@@ -1,0 +1,39 @@
+<form [formGroup]="editVerificationMSGForm" (ngSubmit)="verificationMsgSubmit()">
+  <div class="form-group row">
+    <label for="msgLabel" class="col-3 col-form-label">The label:</label>
+    <div class="col-9">
+      <select
+        class="custom-select custom-select-sm"
+        name="msgLabel"
+        id="msgLabel"
+        [disabled]="verificationMsg"
+        (change)="messageLabelChange($event.target.value)"
+      >
+        <option selected disabled *ngIf="!verificationMsg">Please choose a message type</option>
+        <option *ngFor="let option of messageOptions" [selected]="option == selectedMsgType" [value]="option">
+          {{ option }}
+        </option>
+      </select>
+    </div>
+    <label for="msgText" class="col-3 col-form-label">The message:</label>
+    <div class="col-9">
+      <input
+        type="text"
+        class="form-control form-control-sm"
+        placeholder="Type your message here"
+        [formControlName]="'msgText'"
+        [ngClass]="{ 'is-invalid': msgSubmitted && msgText.invalid && msgText.errors }"
+        (change)="changeDetected($event)"
+      />
+    </div>
+    <div *ngIf="msgText.dirty && msgText.errors?.required" class="invalid-feedback">The verification message is required</div>
+    <div *ngIf="msgText.dirty && msgText.errors?.minlength" class="invalid-feedback">
+      The verification message must be at least 8 characters long
+    </div>
+  </div>
+  <div class="form-group row">
+    <div class="col-12">
+      <button class="btn btn-primary" type="submit" [disabled]="!isMsgSaveable ? 'disabled' : null">Save verification messages</button>
+    </div>
+  </div>
+</form>

@@ -1,0 +1,25 @@
+<div class="mainWidgetContainer">
+  <div *ngIf="!visible">
+    <p>Loading widget data ...</p>
+  </div>
+  <div *ngIf="visible && errorMessage">
+    <p *ngIf="errorMessage" class="error-show">{{ errorMessage }}</p>
+  </div>
+
+  <div *ngIf="!errorMessage && visible" class="chartContainer">
+    <div class="text-header">
+      <span> Most common commands</span>
+    </div>
+    <br />
+    <canvas
+      baseChart
+      [data]="pieChartData"
+      [labels]="pieChartLabels"
+      [chartType]="pieChartType"
+      [options]="pieChartOptions"
+      [plugins]="pieChartPlugins"
+      [legend]="pieChartLegend"
+    >
+    </canvas>
+  </div>
+</div>

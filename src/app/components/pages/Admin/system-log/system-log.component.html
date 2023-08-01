@@ -1,0 +1,67 @@
+<main class="container-fluid" role="main">
+  <h1 class="h3 mb-4 text-gray-800">
+    {{ pageTitle }}
+  </h1>
+
+  <div class="d-flex flex-row justify-content-between mb-4">
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" />
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <mat-label>Log level</mat-label>
+      <select matNativeControl [(ngModel)]="level">
+        <option value="Info">Information</option>
+        <option value="Warn">Warning</option>
+        <option value="Error">Error</option>
+        <option value="Fatal">Fatal</option>
+      </select>
+    </mat-form-field>
+    <mat-form-field class="example-full-width2">
+      <mat-label>Last Worked</mat-label>
+      <input matInput [matDatepicker]="frompick" [(ngModel)]="from" />
+      <mat-datepicker-toggle matSuffix [for]="frompick"></mat-datepicker-toggle>
+      <mat-datepicker #frompick></mat-datepicker>
+    </mat-form-field>
+    <button class="btn btn-primary" (click)="getLogs()">Filter</button>
+  </div>
+
+  <div class="card shadow mb-4">
+    <div class="card-body p-0">
+      <div class="table-responsive row-unclickable">
+        <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+          <!-- Log date -->
+          <ng-container matColumnDef="Logged">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Logged on</th>
+            <td mat-cell *matCellDef="let row">{{ row.Logged | date: 'short' }}</td>
+          </ng-container>
+
+          <!-- Log level -->
+          <ng-container matColumnDef="Level">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Level</th>
+            <td mat-cell *matCellDef="let row">{{ row.Level }}</td>
+          </ng-container>
+
+          <!-- Log message -->
+          <ng-container matColumnDef="Message">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Log message</th>
+            <td class="logMessage" mat-cell *matCellDef="let row">{{ row.Message }}</td>
+          </ng-container>
+
+          <!-- Log by -->
+          <ng-container matColumnDef="Logger">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Logged by</th>
+            <td mat-cell *matCellDef="let row">{{ row.Logger }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+
+        <div class="spinner-holder my-3" *ngIf="loading">
+          <mat-spinner class="mat-spinner"></mat-spinner>
+        </div>
+        <mat-paginator [pageSizeOptions]="[10, 20, 100, 1000]" showFirstLastButtons></mat-paginator>
+      </div>
+    </div>
+  </div>
+</main>

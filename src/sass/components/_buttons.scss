@@ -1,0 +1,72 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+/*
+ * Buttons general stylings
+*/
+button,
+.button,
+.btn,
+.dropdown-item {
+  &:focus,
+  &:active {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &:disabled,
+  &.disabled,
+  &[disabled] {
+    cursor: not-allowed;
+  }
+}
+
+.btn {
+  font-family: 'Open Sans', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.btn-primary {
+  color: var(--white);
+  background-color: map_get($vertican-colors, 'blue-2') !important;
+  border-color: map_get($vertican-colors, 'blue-2') !important;
+
+  &:hover {
+    background-color: darken(map_get($vertican-colors, 'blue-2'), 10%) !important;
+    border-color: darken(map_get($vertican-colors, 'blue-2'), 10%) !important;
+  }
+
+  &:focus,
+  &.focus {
+    outline: none !important;
+    box-shadow: none !important;
+  }
+
+  &:disabled,
+  &[disabled] {
+    &:hover {
+      background-color: map_get($vertican-colors, 'blue-2') !important;
+      border-color: map_get($vertican-colors, 'blue-2') !important;
+    }
+  }
+}
+
+.btn-mat {
+  padding: 0.45rem !important;
+  line-height: 0.8 !important;
+
+  .mat-icon {
+    float: none;
+    margin: 0;
+  }
+}

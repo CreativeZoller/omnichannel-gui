@@ -1,0 +1,100 @@
+<main class="container-fluid" role="main">
+  <h1 class="h3 mb-4 text-gray-800">
+    {{ pageTitle }}
+  </h1>
+
+  <div class="new-commandslist-btn-holder my-4">
+    <button 
+      [disabled]="!canCreate ? 'disabled' : null"
+      class="btn btn-outline btn-primary" 
+      (click)="modify(false)"
+    >Create a new command</button>
+  </div>
+
+  <ng-template *ngIf="noCommands; then showNoCmd; else showEditCmd"></ng-template>
+  <ng-template #showNoCmd>
+    <p class="mb-4">There are no reserved commands yet. Please add them first in order to modify them later.</p>
+  </ng-template>
+
+  <ng-template #showEditCmd>
+  <div class="card shadow mb-4">
+    <div class="card-body p-0">
+        <div class="table-responsive row-unclickable">
+          <table mat-table #table [dataSource]="dataSource" matSort class="vertican-material-table">
+            <!-- Command name -->
+            <ng-container matColumnDef="ReservedCommandName">
+              <th mat-header-cell *matHeaderCellDef mat-sort-header>Reserved Command Name</th>
+              <td mat-cell *matCellDef="let item">{{ item.ReservedCommandName }}</td>
+            </ng-container>
+            <!-- Command message -->
+            <ng-container matColumnDef="MessageToConsumer">
+              <th mat-header-cell *matHeaderCellDef>Command message</th>
+              <td mat-cell *matCellDef="let item">{{ item.MessageToConsumer }}</td>
+            </ng-container>
+            <!-- Command actions -->
+            <ng-container matColumnDef="Actions">
+              <th mat-header-cell *matHeaderCellDef>Actions</th>
+              <td mat-cell *matCellDef="let element">
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Edit this command"
+                  class="mat-icon material-icons mat-icon-edit"
+                  (click)="modify(element)"
+                  >edit</mat-icon
+                >
+                <mat-icon
+                  aria-hidden="false"
+                  aria-label="Remove this command"
+                  class="mat-icon material-icons mat-icon-delete"
+                  (click)="delete(element)"
+                  >delete</mat-icon
+                >
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 20, 100, 1000]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+  </div>
+  </ng-template>
+
+  <div 
+    [ngClass]="{ active: overlay }"
+    class="sidebar-overlay sidebar-overlay-admin"
+    id="commands-overlay"
+  >
+    <div class="sidebar-close" (click)="onCloseClicked()">
+      <mat-icon aria-hidden="false" aria-label="Close this overlay" class="mat-icon material-icons">highlight_off</mat-icon>
+    </div>
+
+    <ng-template *ngIf="selectedCommand; then showExistingCmd; else showNewCmd"> </ng-template>
+      <ng-template #showExistingCmd>
+        <h3 class="my-4 text-gray-800">
+          Modify reserved command:
+          <span class="d-block text-muted">{{ selectedCommand.ReservedCommandName }}</span>
+        </h3>
+          <vt-reserved-form
+            [selectedCmd]="selectedCommand"
+            [isCommandformVisible]="makeCommandformVisible"
+            [commandsToBeUsed]="commandsToUsed"
+            (cmdAdded)="forceRefreshCmd($event)"
+          ></vt-reserved-form>
+      </ng-template>
+        <ng-template #showNewCmd>
+          <h3 class="my-4 text-gray-800">
+            Add new reserved command:
+            <span class="d-block text-muted">&nbsp;</span>
+          </h3>
+          <vt-reserved-form
+            [isCommandformVisible]="makeCommandformVisible"
+            [commandsToBeUsed]="usableCommands"
+            (cmdAdded)="forceRefreshCmd($event)"
+          ></vt-reserved-form>
+        </ng-template>
+  </div>
+  <div [ngClass]="{ active: overlay }" class="dark-overlay"></div>
+</main>

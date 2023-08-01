@@ -1,0 +1,35 @@
+@charset 'utf-8';
+/*
+ *
+ *   Omnichannel Communication GUI
+ *   version 0.0.1
+ *
+*/
+
+/*
+ * Project dependencies
+*/
+@import './../loc-variables';
+@import './../loc-mixins';
+
+
+/*
+ * Progress bar general stylings
+*/
+.progress-sm {
+  height: .5rem !important;
+
+  .progress-bar {
+    /*
+     * 0  -  20 map_get($vertican-colors, 'lichi')
+     * 21 -  40 map_get($vertican-colors, 'orange')
+     * 41 -  60 map_get($vertican-colors, 'blue-4')
+     * 61 -  80 map_get($vertican-colors, 'blue-3')
+     * 81 -  90 map_get($vertican-colors, 'blue-2')
+     * 91 - 100 $green
+    */
+    &[data-valuenow="34"] {
+      background-color: map_get($vertican-colors, 'blue-4');
+    }
+  }
+}
